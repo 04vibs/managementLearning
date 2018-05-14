@@ -8,7 +8,7 @@ const db=new Sequelize('managementLearningdb','test','ngrtest',{
 
 })
 
-const Course=db.define('course',{
+const Course=db.define('courses',{
 
     id:{
         type:Sequelize.INTEGER,
@@ -91,11 +91,6 @@ const Student=db.define('Students',{
     }
 })
 
-
-db.sync()
-        .then(()=>console.log('Database has been syhnced'))
-        .catch((err)=>console.log(err));
-
 const Lecture=db.define('Lectures',{
 
     id:{
@@ -108,5 +103,34 @@ const Lecture=db.define('Lectures',{
         allowNull:false,
     }
 })
+Lecture.belongsTo(Subject,{foreignKey:'subjectId'})
+Lecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
+
+const BatchTeacherLecture=db.define('batchTeacherLecture',{
+   
+    id:{
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        primaryKey:true
+    },
+
+})
+BatchTeacherLecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
+BatchTeacherLecture.belongsTo(Batch,{foreignKey:'BatchId'})
+BatchTeacherLecture.belongsTo(Lecture,{foreignKey:'LectureId'})
+
+const BatchStudent=db.define('BatchStudent',{
+    id:{
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        primaryKey:true
+    },
+})
+BatchStudent.belongsTo(Student,{foreignKey:'StudentId'})
+
+
+db.sync()
+        .then(()=>console.log('Database has been syhnced'))
+        .catch((err)=>console.log(err));
 
 
