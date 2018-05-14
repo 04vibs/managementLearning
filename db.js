@@ -22,7 +22,7 @@ const Course=db.define('courses',{
 
 })
 
-const Batch=db.define('Batches',{
+const Batch=db.define('batches',{
    
     id:{
         type:Sequelize.INTEGER,
@@ -34,10 +34,7 @@ const Batch=db.define('Batches',{
         allowNull:false,
     }
 
-
 })
-Batch.belongsTo(Course,{foreignKey: 'courseId'})
-
 
 const Subject=db.define('Subjects',{
     id:{
@@ -51,8 +48,6 @@ const Subject=db.define('Subjects',{
     }
 
 })
-Subject.belongsTo(Course,{foreignKey:'courseId'})
-
 
 const Teacher=db.define('Teachers',{
     id:{
@@ -66,17 +61,6 @@ const Teacher=db.define('Teachers',{
     }
 
 })
-
-const TeacherSubject=db.define('TeacherSubject',{
-    id:{
-        type:Sequelize.INTEGER,
-        autoIncrement:true,
-        primaryKey:true
-    }
-})
-TeacherSubject.belongsTo(Teacher,{foreignKey:'TeacherId'})
-TeacherSubject.belongsTo(Subject,{foreignKey:'subjectId'})
-
 
 const Student=db.define('Students',{
 
@@ -103,37 +87,21 @@ const Lecture=db.define('Lectures',{
         allowNull:false,
     }
 })
+
+Batch.belongsTo(Course,{foreignKey: 'courseId'})
+Subject.belongsTo(Course,{foreignKey:'courseId'})
+Teacher.belongsTo(Subject,{foreignKey:'subjectId'})
+Lecture.belongsTo(Batch,{foreignKey:'batchId'})
 Lecture.belongsTo(Subject,{foreignKey:'subjectId'})
 Lecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
-
-const BatchTeacherLecture=db.define('batchTeacherLecture',{
-   
-    id:{
-        type:Sequelize.INTEGER,
-        autoIncrement:true,
-        primaryKey:true
-    },
-
-})
-BatchTeacherLecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
-BatchTeacherLecture.belongsTo(Batch,{foreignKey:'BatchId'})
-BatchTeacherLecture.belongsTo(Lecture,{foreignKey:'LectureId'})
-
-const BatchStudent=db.define('BatchStudent',{
-    id:{
-        type:Sequelize.INTEGER,
-        autoIncrement:true,
-        primaryKey:true
-    },
-})
-BatchStudent.belongsTo(Student,{foreignKey:'StudentId'})
-exports=module.exports={
-    Course,Student,Teacher,TeacherSubject,Batch,BatchStudent,BatchTeacherLecture,Lecture,Subject
-    
-    }
+Student.belongsTo(Batch,{foreignKey:'batchId'})
 
 db.sync()
-        .then(()=>console.log('Database has been syhnced'))
+        .then(()=>console.log('Database has been synced'))
         .catch((err)=>console.log(err));
+
+module.exports={
+    Batch,Course,Teacher,Subject,Lecture,Student
+}
 
 

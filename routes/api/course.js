@@ -17,6 +17,21 @@ route.get('/',(req,res)=>{
    
 
 })
+route.get('/:id',(req,res)=>{
+    console.log("Inside course by id")
+    Course.findOne({
+    
+        where: {
+            id:req.params.id
+        }
+    
+    }).then((courseid)=>{
+        console.log(courseid)
+        res.status(200).send(courseid)
+    }).catch((err)=>{
+        error: "could not find course by corresponding id"
+    })
+})
 
 
 route.post('/',(req,res)=>{
