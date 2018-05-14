@@ -102,7 +102,7 @@ Subject.belongsTo(Course,{foreignKey:'courseId'})
 Teacher.belongsTo(Subject,{foreignKey:'subjectId'})
 Lecture.belongsTo(Batch,{foreignKey:'batchId'})
 Lecture.belongsTo(Subject,{foreignKey:'subjectId'})
-Lecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
+Lecture.belongsTo(Teacher,{foreignKey:'teacherId'})
 subscription.belongsTo(Student,{foreignKey:'StudentId'})
 subscription.belongsTo(Batch,{foreignKey:'BatchId'})
 

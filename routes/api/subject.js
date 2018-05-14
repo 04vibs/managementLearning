@@ -1,4 +1,6 @@
 const Subject=require('../../db').Subject
+const Teacher=require('../../db').Teacher
+
 const route=require('express').Router();
 
 route.get('/',(req,res)=>{
@@ -27,6 +29,23 @@ route.get('/:id',(req,res)=>{
         error: "could not find subject by corresponding id"
     })
 })
+
+route.get('/:id/teachers',(req,res)=>{
+    console.log("Inside subject by id by teachers")
+    Teacher.findAll({
+    
+        where: {
+            subjectId:req.params.id
+        }
+    
+    }).then((teacher)=>{
+        console.log(teacher)
+        res.status(200).send(teacher)
+    }).catch((err)=>{
+        error: "could not find subject by corresponding by teacher"
+    })
+})
+
 
 route.post('/',(req,res)=>{
     console.log("Inside subject post")
