@@ -57,7 +57,8 @@ route.get('/:id/batches',(req,res)=>{
 
 
 route.get('/:courseId/batches/:batchId',(req,res)=>{ 
-        Batch.findOne({ where: { 
+        Batch.findOne({ 
+            where: { 
                 id:req.params.batchId, 
                 courseId:req.params.courseId    
             } 
@@ -68,7 +69,19 @@ route.get('/:courseId/batches/:batchId',(req,res)=>{
         }) 
     }) 
 
+route.get('/:courseId/batches/:batchId/lectures/:lectureId',(req,res)=>{
+    Lecture.findOne({
+        where:{
+            id:req.params.lectureId,
+            batchId:req.params.batchId
 
+        }
+    }).then((lecturedata)=>{
+        res.status(200).send(lecturedata)
+    }).catch((err)=>{
+        res.status(400).send("lecture not found")
+    })
+})
 
 route.post('/',(req,res)=>{
     console.log("Inside courses post")
@@ -87,6 +100,8 @@ route.post('/',(req,res)=>{
     })
 
 })
+
+
 
 route.post('/:courseId/batches/:batchId/lectures',(req,res)=>{
     Lecture.create({

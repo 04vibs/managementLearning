@@ -47,6 +47,7 @@ route.get('/:id/teachers',(req,res)=>{
 })
 
 
+
 route.post('/',(req,res)=>{
     console.log("Inside subject post")
     console.log(req.body.name)
