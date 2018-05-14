@@ -1,4 +1,5 @@
 const Student=require('../../db').Student
+const SUbscription=require('../../db').subscription
 const route=require('express').Router();
 
 route.get('/',(req,res)=>{
@@ -28,6 +29,24 @@ route.get('/:id',(req,res)=>{
     })
 })
 
+route.get('/:id/batches',(req,res)=>{
+    console.log("Inside course by id and batches")
+    SUbscription.findAll({
+    
+        where: {
+            StudentId:req.params.id
+            
+        }
+    
+    }).then((subid)=>{
+        console.log(subid)
+        res.status(200).send(subid)
+    }).catch((err)=>{
+        error: "could not find course by batch and id"
+    })
+})
+
+
 route.post('/',(req,res)=>{
     console.log("Inside student post")
     console.log(req.body.name)
@@ -46,5 +65,22 @@ route.post('/',(req,res)=>{
     })
 })
 
+route.post('/:id/batches',(req,res)=>{
+    console.log("Inside sub post")
+    console.log(req.body.batchId)
+    console.log(req.body.studentid)
 
+    SUbscription.create({
+        StudentId:req.params.id,
+        BatchId:req.body.batchId
+
+    }).then((subscriptiondata)=>{
+        console.log("Inside subscription ")
+        res.status(201).send(subscriptiondata)
+    }).catch((err)=>{
+        res.status(501).send({
+            error: "could not add in subscription"
+        })
+    })
+})
 exports=module.exports=route

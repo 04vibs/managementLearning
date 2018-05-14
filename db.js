@@ -87,6 +87,15 @@ const Lecture=db.define('Lectures',{
         allowNull:false,
     }
 })
+const subscription =db.define('subscriptions',{
+    id:{
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        primaryKey:true
+    },
+
+})
+
 
 Batch.belongsTo(Course,{foreignKey: 'courseId'})
 Subject.belongsTo(Course,{foreignKey:'courseId'})
@@ -94,14 +103,16 @@ Teacher.belongsTo(Subject,{foreignKey:'subjectId'})
 Lecture.belongsTo(Batch,{foreignKey:'batchId'})
 Lecture.belongsTo(Subject,{foreignKey:'subjectId'})
 Lecture.belongsTo(Teacher,{foreignKey:'TeacherId'})
-Student.belongsTo(Batch,{foreignKey:'batchId'})
+subscription.belongsTo(Student,{foreignKey:'StudentId'})
+subscription.belongsTo(Batch,{foreignKey:'BatchId'})
+
 
 db.sync()
         .then(()=>console.log('Database has been synced'))
         .catch((err)=>console.log(err));
 
 module.exports={
-    Batch,Course,Teacher,Subject,Lecture,Student
+    Batch,Course,Teacher,Subject,Lecture,Student,subscription
 }
 
 

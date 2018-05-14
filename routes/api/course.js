@@ -1,4 +1,5 @@
 const Course=require('../../db').Course
+const Batch=require('../../db').Batch
 
 const route=require('express').Router()
 
@@ -17,6 +18,7 @@ route.get('/',(req,res)=>{
    
 
 })
+
 route.get('/:id',(req,res)=>{
     console.log("Inside course by id")
     Course.findOne({
@@ -32,6 +34,25 @@ route.get('/:id',(req,res)=>{
         error: "could not find course by corresponding id"
     })
 })
+
+
+route.get('/:id/batches',(req,res)=>{
+    console.log("Inside course by id and batches")
+    Batch.findAll({
+    
+        where: {
+            courseId:req.params.id
+            
+        }
+    
+    }).then((batch)=>{
+        console.log(batch)
+        res.status(200).send(batch)
+    }).catch((err)=>{
+        error: "could not find course by batch and id"
+    })
+})
+
 
 
 route.post('/',(req,res)=>{
