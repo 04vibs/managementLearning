@@ -31,8 +31,10 @@ route.get('/:id',(req,res)=>{
 route.post('/',(req,res)=>{
     console.log("Inside student post")
     console.log(req.body.name)
+    console.log(req.body.id)
     Student.create({
-        name:req.body.name
+        name:req.body.name,
+        batchId :req.body.id
     }).then((students)=>{
         console.log("Inside student creation post")
         res.status(201).send(students)

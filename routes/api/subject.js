@@ -34,7 +34,7 @@ route.post('/',(req,res)=>{
     console.log(req.body.courseId)
     Subject.create({
         name:req.body.name,
-        CourseId:req.body.courseId
+        courseId:parseInt(req.body.courseId)
     }).then((subjects)=>{
         console.log("Inside student creation post")
         console.log(req.body.courseId)
