@@ -9,7 +9,9 @@ app.use(express.urlencoded({
 
 }))
 
-app.use('/api',require('./routes/api').route)
+
+
+app.use('/',require('./routes/api').route)
 
 app.listen(5151,function(){
     console.log("server started on http://localhost:5151");

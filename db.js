@@ -127,7 +127,10 @@ const BatchStudent=db.define('BatchStudent',{
     },
 })
 BatchStudent.belongsTo(Student,{foreignKey:'StudentId'})
-
+exports=module.exports={
+    Course,Student,Teacher,TeacherSubject,Batch,BatchStudent,BatchTeacherLecture,Lecture,Subject
+    
+    }
 
 db.sync()
         .then(()=>console.log('Database has been syhnced'))
